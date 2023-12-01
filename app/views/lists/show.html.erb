@@ -1,14 +1,18 @@
 <div class="container">
 <h1><%= @list.name %></h1>
 
+<% if @list.photo.attached? %>
+  <%= cl_image_tag @list.photo.key, height: 300, width: 400, crop: :fill %>
+<% end %>
+
 <ul>
 <% @list.movies.each do |movie| %>
-  <li>
-    <%= movie.title %>
-    <%= movie.overview %>
-    <%= Bookmark.find_by(movie_id: movie.id, list_id: @list.id).comment %>
-    <%= link_to "Delete Bookmark", bookmark_path(Bookmark.find_by(movie_id: movie.id, list_id: @list.id)), data: {turbo_method: :delete, turbo_confirm: "Are you sure ?"} %>
-  </li>
+    <li>
+      <%= movie.title %>
+      <%= movie.overview %>
+      <%= Bookmark.find_by(movie_id: movie.id, list_id: @list.id).comment %>
+      <%= link_to "Delete Bookmark", bookmark_path(Bookmark.find_by(movie_id: movie.id, list_id: @list.id)), data: {turbo_method: :delete, turbo_confirm: "Are you sure ?"} %>
+    </li>
 </ul>
 <% end %>
 
